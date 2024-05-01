@@ -1,34 +1,36 @@
-function validator() {
-  const input = document.getElementById('input');
-  const button = document.getElementById('button');
-  const button2 = document.getElementById('button2');
-  const result = document.getElementById('result');
+const MIN_VALUE = 0;
+const MAX_VALUE = 100;
 
-  button.addEventListener('click', () => {
-    if (input.value) {
-      if (Number.isInteger(input.value)) {
-        if (
-          Number(input.value) > 0 &&
-          Number(input.value) < 100 &&
-          Number(input.value) % 2 === 0
-        ) {
-          result.innerHTML = 'Valid';
-        } else {
-          result.innerHTML = 'Invalid';
-        }
-        result.innerHTML = 'Valid';
-      } else {
-        result.innerHTML = 'Invalid';
-      }
-    } else {
-      result.innerHTML = 'Invalid';
-    }
-  });
+const isInputNumber = (input) => !isNaN(input);
+const isInputValid = (input) => input > MIN_VALUE && input < MAX_VALUE;
+const clearFormInput = () => {
+  document.getElementById('input').value = '';
+  document.getElementById('result').innerHTML = '';
+};
 
-  button2.addEventListener('click', () => {
-    input.value = '';
-    result.innerHTML = '';
-  });
+const validateInput = () => {
+  const inputElement = document.getElementById('input');
+  const resultElement = document.getElementById('result');
+  const inputValue = inputElement.value;
+
+  if (!isInputNumber(inputValue)) {
+    resultElement.innerHTML = 'Invalid';
+    return;
+  }
+  const numericInputValue = Number(inputValue)
+  if (!isInputValid(numericInputValue)) {
+    resultElement.innerHTML = 'Invalid';
+    return;
+  }
+  resultElement.innerHTML = 'Valid';
+};
+
+function main() {
+  const validateButton = document.getElementById('button');
+  const clearButton = document.getElementById('button2');
+
+  validateButton.addEventListener('click', validateInput);
+  clearButton.addEventListener('click', clearFormInput);
 }
 
-validator();
+main();
